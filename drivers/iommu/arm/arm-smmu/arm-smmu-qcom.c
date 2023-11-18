@@ -7,6 +7,7 @@
 #include <linux/adreno-smmu-priv.h>
 #include <linux/delay.h>
 #include <linux/of_device.h>
+#include <linux/of_platform.h>
 #include <linux/firmware/qcom/qcom_scm.h>
 #include <linux/platform_device.h>
 #include <linux/pm_runtime.h>
@@ -669,6 +670,7 @@ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
 	const struct device_node *np = smmu->dev->of_node;
 	const struct arm_smmu_impl *impl;
 	struct qcom_smmu *qsmmu;
+	int ret;
 
 	if (!data)
 		return ERR_PTR(-EINVAL);
@@ -692,6 +694,11 @@ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
 
 	qsmmu->smmu.impl = impl;
 	qsmmu->data = data;
+
+	INIT_LIST_HEAD(&qsmmu->tbu_list);
+	ret = devm_of_platform_populate(smmu->dev);
+	if (ret)
+		return ERR_PTR(ret);
 
 	return &qsmmu->smmu;
 }
