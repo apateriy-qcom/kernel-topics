@@ -73,6 +73,7 @@ allOf:
         compatible:
           enum:
             - qcom,x1e80100-dp-phy
+            - qcom,sa8775p-edp-phy
     then:
       properties:
         clocks:
