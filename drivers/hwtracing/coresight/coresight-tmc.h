@@ -209,6 +209,19 @@ struct tmc_resrv_buf {
 };
 
 /**
+ * @sysfs_buf:	Allocated sysfs_buf.
+ * @is_free:	Indicates whether the buffer is free to choose.
+ * @pos:	Position of the buffer.
+ * @node:	Node in etr_buf_list.
+ */
+struct etr_buf_node {
+	struct etr_buf		*sysfs_buf;
+	bool			is_free;
+	loff_t			pos;
+	struct list_head	node;
+};
+
+/**
  * struct tmc_drvdata - specifics associated to an TMC component
  * @atclk:	optional clock for the core parts of the TMC.
  * @pclk:	APB clock if present, otherwise NULL
@@ -248,6 +261,8 @@ struct tmc_resrv_buf {
  * @desc_name:	Name to be used while creating crash interface.
  * @dev:	pointer to the device associated with this TMC.
  * @link:	link to the delay_probed list.
+ * @etr_buf_list: List that is used to manage allocated etr_buf.
+ * @reading_node: Available buffer_node for byte-cntr reading.
  */
 struct tmc_drvdata {
 	struct clk		*atclk;
@@ -283,6 +298,8 @@ struct tmc_drvdata {
 	const char		*desc_name;
 	struct device		*dev;
 	struct list_head	link;
+	struct list_head	etr_buf_list;
+	struct etr_buf_node	*reading_node;
 };
 
 struct etr_buf_operations {
