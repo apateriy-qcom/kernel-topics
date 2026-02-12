@@ -36,10 +36,10 @@
 
 		id-gpios = <&pmm8620au_0_gpios 9 GPIO_ACTIVE_HIGH>;
 		vbus-gpios = <&expander6 7 GPIO_ACTIVE_HIGH>;
-		vbus-supply = <&usb2_vbus>;
+		vbus-supply = <&vbus_supply_regulator_2>;
 
-		pinctrl-0 = <&usb2_id>;
 		pinctrl-names = "default";
+		pinctrl-0 = <&usb2_id>;
 
 		port {
 			usb2_con_hs_ep: endpoint {
@@ -132,6 +132,15 @@
 		};
 	};
 
+	vbus_supply_regulator_2: vbus-supply-regulator-2 {
+        	compatible = "regulator-fixed";
+        	regulator-name = "vbus_supply_2";
+        	gpio = <&pmm8650au_1_gpios 7 GPIO_ACTIVE_HIGH>;
+        	regulator-min-microvolt = <5000000>;
+        	regulator-max-microvolt = <5000000>;
+        	enable-active-high;
+	};
+``
 	vreg_cam0_2p8: vreg-cam0-2p8 {
 		compatible = "regulator-fixed";
 		regulator-name = "vreg_cam0_2p8";
@@ -926,6 +935,5 @@
 	vdda-pll-supply = <&vreg_l7a>;
 	vdda18-supply = <&vreg_l7c>;
 	vdda33-supply = <&vreg_l9a>;
-
 	status = "okay";
 };
