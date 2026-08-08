@@ -1751,21 +1751,25 @@
 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
 					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
 					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>,
-					      <&smp2p_adsp_in 7 IRQ_TYPE_EDGE_RISING>;
+					      <&smp2p_adsp_in 7 IRQ_TYPE_EDGE_RISING>,
+					      <&smp2p_adsp_in 9 IRQ_TYPE_EDGE_RISING>;
 			interrupt-names = "wdog",
 					  "fatal",
 					  "ready",
 					  "handover",
 					  "stop-ack",
-					  "shutdown-ack";
+					  "shutdown-ack",
+					  "pong";
 
 			memory-region = <&hpass_dsp0_mem>,
 					<&hpass_dsp0_dtb_mem>;
 
 			qcom,qmp = <&aoss_qmp>;
 
-			qcom,smem-states = <&smp2p_adsp_out 0>;
-			qcom,smem-state-names = "stop";
+			qcom,smem-states = <&smp2p_adsp_out 0>,
+					   <&smp2p_adsp_out 8>;
+			qcom,smem-state-names = "stop",
+						"ping";
 
 			status = "disabled";
 
