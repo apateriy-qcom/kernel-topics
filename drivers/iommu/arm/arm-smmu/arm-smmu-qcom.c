@@ -695,8 +695,9 @@ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
 	qsmmu->smmu.impl = impl;
 	qsmmu->data = data;
 
+	mutex_init(&qsmmu->tbu_list_lock);
 	INIT_LIST_HEAD(&qsmmu->tbu_list);
-	ret = devm_of_platform_populate(smmu->dev);
+	ret = devm_of_platform_populate(qsmmu->smmu.dev);
 	if (ret)
 		return ERR_PTR(ret);
 

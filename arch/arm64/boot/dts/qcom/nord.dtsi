@@ -2331,6 +2331,9 @@
 			compatible = "qcom,nord-smmu-500", "qcom,adreno-smmu",
 				     "qcom,smmu-500", "arm,mmu-500";
 			reg = <0x0 0x03da0000 0x0 0x40000>;
+			#address-cells = <2>;
+			#size-cells = <2>;
+			ranges;
 			#iommu-cells = <2>;
 			#global-interrupts = <1>;
 			interrupts = <GIC_SPI 705 IRQ_TYPE_LEVEL_HIGH>,
@@ -2367,12 +2370,22 @@
 				     <GIC_SPI 732 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 733 IRQ_TYPE_LEVEL_HIGH>;
 			dma-coherent;
+
+			gfx_0_tbu: tbu@3de4000 {
+				compatible = "qcom,qsmmuv500-tbu";
+				reg = <0x0 0x03de4000 0x0 0x1000>;
+				reg-names = "base";
+				qcom,stream-id-range = <0x0 0x400>;
+			};
 		};
 
 		adreno_smmu_1: iommu@98a0000 {
 			compatible = "qcom,nord-smmu-500", "qcom,adreno-smmu",
 				     "qcom,smmu-500", "arm,mmu-500";
 			reg = <0x0 0x098a0000 0x0 0x40000>;
+			#address-cells = <2>;
+			#size-cells = <2>;
+			ranges;
 			#iommu-cells = <2>;
 			#global-interrupts = <1>;
 			interrupts = <GIC_SPI 963 IRQ_TYPE_LEVEL_HIGH>,
@@ -2407,6 +2420,13 @@
 				     <GIC_SPI 973 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 974 IRQ_TYPE_LEVEL_HIGH>;
 			dma-coherent;
+
+			gfx_1_tbu: tbu@98e4000 {
+				compatible = "qcom,qsmmuv500-tbu";
+				reg = <0x0 0x098e4000 0x0 0x1000>;
+				reg-names = "base";
+				qcom,stream-id-range = <0x0 0x400>;
+			};
 		};
 
 		pcie_smmu: iommu@9980000 {

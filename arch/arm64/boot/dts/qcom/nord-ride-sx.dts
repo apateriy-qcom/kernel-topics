@@ -707,3 +707,45 @@
 
 	status = "okay";
 };
+
+&soc {
+	iommu_test_device {
+		compatible = "qcom,iommu-debug-test";
+
+		usecase0_adreno {
+			compatible = "qcom,iommu-debug-usecase";
+			iommus = <&adreno_smmu_0 0x0014 0x0>;
+		};
+
+		usecase1_adreno_0 {
+			compatible = "qcom,iommu-debug-usecase";
+			iommus = <&adreno_smmu_0 0x0015 0x0>;
+		};
+
+		usecase2_adreno_1 {
+			compatible = "qcom,iommu-debug-usecase";
+			iommus = <&adreno_smmu_1 0x0014 0x0>;
+		};
+
+		usecase3_adreno_1 {
+			compatible = "qcom,iommu-debug-usecase";
+			iommus = <&adreno_smmu_1 0x0015 0x0>;
+		};
+		usecase4_apps_0 {
+			compatible = "qcom,iommu-debug-usecase";
+			iommus = <&apps_smmu_0 0x0120 0x0>;
+		};
+
+		usecase3_apps_dma {
+			compatible = "qcom,iommu-debug-usecase";
+			iommus = <&apps_smmu_0 0x0001 0x0>;
+			dma-coherent;
+		};
+
+		sec_pix: secure-pixel {
+			compatible = "qcom,iommu-debug-usecase";
+			iommus = <&apps_smmu_0 0x0001 0x0>;
+			qcom,iommu-vmid = <0xa>; /* VMID_CP_PIXEL */
+		};
+	};
+};
