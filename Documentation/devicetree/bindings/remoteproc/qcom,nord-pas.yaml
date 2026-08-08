@@ -64,6 +64,7 @@ properties:
       - description: Memory region for Devicetree Firmware authentication
 
   interrupts:
+    minItems: 6
     items:
       - description: Watchdog interrupt
       - description: Fatal interrupt
@@ -71,8 +72,10 @@ properties:
       - description: Handover interrupt
       - description: Stop acknowledge interrupt
       - description: Shutdown acknowledge interrupt
+      - description: Pong interrupt
 
   interrupt-names:
+    minItems: 6
     items:
       - const: wdog
       - const: fatal
@@ -80,13 +83,16 @@ properties:
       - const: handover
       - const: stop-ack
       - const: shutdown-ack
+      - const: pong
 
   qcom,smem-states:
-    maxItems: 1
+    minItems: 1
+    maxItems: 2
     description: States used by the AP to signal the Hexagon core
 
   qcom,smem-state-names:
-    maxItems: 1
+    minItems: 1
+    maxItems: 2
     description: The names of the state bits used for SMP2P output
 
 required:
@@ -113,6 +119,14 @@ allOf:
           minItems: 3
         power-domain-names:
           minItems: 3
+        interrupts:
+          maxItems: 6
+        interrupt-names:
+          maxItems: 6
+        qcom,smem-states:
+          maxItems: 1
+        qcom,smem-state-names:
+          maxItems: 1
 
 unevaluatedProperties: false
 
@@ -137,13 +151,15 @@ examples:
                               <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
                               <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
                               <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>,
-                              <&smp2p_adsp_in 7 IRQ_TYPE_EDGE_RISING>;
+                              <&smp2p_adsp_in 7 IRQ_TYPE_EDGE_RISING>,
+                              <&smp2p_adsp_in 9 IRQ_TYPE_EDGE_RISING>;
         interrupt-names = "wdog",
                           "fatal",
                           "ready",
                           "handover",
                           "stop-ack",
-                          "shutdown-ack";
+                          "shutdown-ack",
+                          "pong";
 
         memory-region = <&hpass_dsp0_mem>, <&hpass_dsp0_dtb_mem>;
 
@@ -156,8 +172,10 @@ examples:
                              "mx";
 
         qcom,qmp = <&aoss_qmp>;
-        qcom,smem-states = <&smp2p_adsp_out 0>;
-        qcom,smem-state-names = "stop";
+        qcom,smem-states = <&smp2p_adsp_out 0>,
+                           <&smp2p_adsp_out 8>;
+        qcom,smem-state-names = "stop",
+                                "ping";
 
         glink-edge {
             interrupts-extended = <&ipcc IPCC_MPROC_ADSP0

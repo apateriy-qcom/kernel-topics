@@ -26,11 +26,11 @@ properties:
 
   interrupts:
     minItems: 5
-    maxItems: 6
+    maxItems: 7
 
   interrupt-names:
     minItems: 5
-    maxItems: 6
+    maxItems: 7
 
   iommus:
     maxItems: 1
