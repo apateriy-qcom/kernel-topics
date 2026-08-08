@@ -1538,7 +1538,7 @@ static const struct qcom_pas_data milos_cdsp_resource = {
 
 static const struct qcom_pas_data nord_adsp_resource = {
 	.crash_reason_smem = 423,
-	.firmware_name = "adsp.mdt",
+	.firmware_name = "adsp.mbn",
 	.dtb_firmware_name = "adsp_dtb.mbn",
 	.pas_id = 1,
 	.dtb_pas_id = 36,
