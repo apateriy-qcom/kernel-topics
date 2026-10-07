@@ -971,6 +971,13 @@
 	status = "okay";
 };
 
+&remoteproc_soccp {
+	firmware-name = "qcom/nord/soccp.mbn",
+			"qcom/nord/soccp_dtb.mbn";
+
+	status = "okay";
+};
+
 &uart15 {
 	status = "okay";
 };
